@@ -80,15 +80,24 @@ class Settings(BaseSettings):
         description="Разрешенные расширения файлов",
     )
 
-    MINIO_ENDPOINT: str = Field(default="localhost:9000", description="MinIO endpoint")
-    MINIO_ACCESS_KEY: str = Field(default="minioadmin", description="MinIO access key")
-    MINIO_SECRET_KEY: SecretStr = Field(
-        default="minioadmin", description="MinIO secret key"
+    # SeaweedFS через S3-совместимый API (weed s3, порт 8333 по умолчанию)
+    SEAWEEDFS_S3_ENDPOINT: str = Field(
+        default="http://localhost:8333", description="SeaweedFS S3 endpoint"
     )
-    MINIO_BUCKET_NAME: str = Field(default="avatars", description="MinIO bucket name")
-    MINIO_SECURE: bool = Field(default=False, description="Use HTTPS for MinIO")
-    MINIO_PUBLIC_URL: str = Field(
-        default="http://localhost:9000", description="Public URL for MinIO"
+    SEAWEEDFS_ACCESS_KEY: str = Field(
+        default="seaweedfs", description="SeaweedFS S3 access key"
+    )
+    SEAWEEDFS_SECRET_KEY: SecretStr = Field(
+        default="seaweedfs", description="SeaweedFS S3 secret key"
+    )
+    SEAWEEDFS_REGION: str = Field(
+        default="us-east-1", description="Регион для подписи S3-запросов"
+    )
+    SEAWEEDFS_BUCKET_NAME: str = Field(
+        default="avatars", description="SeaweedFS bucket name"
+    )
+    SEAWEEDFS_PUBLIC_URL: str = Field(
+        default="http://localhost:8333", description="Публичный URL SeaweedFS"
     )
 
     @field_validator("JWT_SECRET_KEY")
