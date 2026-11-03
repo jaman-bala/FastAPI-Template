@@ -3,8 +3,9 @@
 services:
   seaweedfs:
     image: chrislusf/seaweedfs:4.52
-    container_name: seaweedfs
-    # master + volume + filer + S3-шлюз в одном процессе
+    container_name: seaweedfs_fastapi
+    # master + volume + filer + S3-шлюз в одном процессе;
+    # -s3.iam=false — встроенный IAM/STS API не используется (ключи в s3.json)
     command: >
       server
       -dir=/data
@@ -15,6 +16,7 @@ services:
       -filer
       -s3
       -s3.port=8333
+      -s3.iam=false
       -s3.config=/etc/seaweedfs/s3.json
     ports:
       - "8333:8333" # S3 API (SEAWEEDFS_S3_ENDPOINT)
